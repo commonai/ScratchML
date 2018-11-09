@@ -12,7 +12,7 @@ class LogisticRegression(BaseModel):
         Can only take class labels 0 and 1
     """
 
-    def __init__(self, n_iteration=1000, learning_rate=0.1, seed=1):
+    def __init__(self, n_iteration=100, learning_rate=0.0001, seed=1):
         self.weights = None
         self.bias = None
         self.n_iteration = n_iteration
@@ -21,14 +21,17 @@ class LogisticRegression(BaseModel):
         self.loss = []
 
     def _init_weights(self, n_features):
-        """Intializes weights and bias to zeros
+        """Randomly initialize weights and bias. Parameters will be set to random
+            values between [-1/sqrt(N), 1/sqrt(N)].
 
             Args:
                 n_features (int): number of input features
         """
-        # zeroes initializations, you may try different ones
-        self.weights = np.zeros((n_features,))
-        self.bias = np.zeros((1,))
+        limit = 1 / math.sqrt(n_features)
+        random_gen = np.random.RandomState(self.seed)
+        # uniform initializations is arbitrary, you may try different ones like normal
+        self.weights = random_gen.uniform(-limit, limit, (n_features,))
+        self.bias = random_gen.uniform(-limit, limit, (1,))
 
     def fit(self, X, Y):
         """Fit model on X and Y training data
@@ -45,13 +48,13 @@ class LogisticRegression(BaseModel):
             output = self._forward(X)
 
             # calculate error
-            error = (Y - output)  # shape, (n_samples, 1)
+            errors = (Y - output)  # shape, (n_samples, 1)
 
             # backward pass
             # update weights and bias
-            gradient_weights = np.dot(error, X)
+            gradient_weights = np.dot(errors, X)
             self.weights += self.learning_rate * gradient_weights
-            gradient_bias = np.sum(error)
+            gradient_bias = np.sum(errors)
             self.bias += self.learning_rate * gradient_bias
 
             # calculate the loss

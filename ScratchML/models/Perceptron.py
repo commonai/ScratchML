@@ -23,7 +23,7 @@ class Perceptron(BaseModel):
         """
         limit = 1 / math.sqrt(n_features)
         random_gen = np.random.RandomState(self.seed)
-        # uniform initializations, you may try different ones
+        # uniform initializations is arbitrary, you may try different ones like normal
         self.weights = random_gen.uniform(-limit, limit, (n_features,))
         self.bias = random_gen.uniform(-limit, limit, (1,))
 
@@ -39,18 +39,18 @@ class Perceptron(BaseModel):
 
         for _ in tqdm(range(self.n_iteration)):
             # feedforward and predict
-            output = self.predict(X)
+            output = self._forward(X)
 
             # compare
-            error = (Y - output)
+            errors = (Y - output)
 
             # update weight and bias
-            gradient_weights = np.dot(error, X)
+            gradient_weights = np.dot(errors, X)
             self.weights += self.learning_rate * gradient_weights
-            gradient_bias = np.sum(error)
+            gradient_bias = np.sum(errors)
             self.bias += self.learning_rate * gradient_bias
 
-            self.loss.append(self.mean_squared_error(Y, output))
+            self.loss.append(self.sum_squared_error(Y, output))
 
     def linear(self, Z):
         """Activation function. return Z.
@@ -65,8 +65,10 @@ class Perceptron(BaseModel):
         """
         return Z
 
-    def mean_squared_error(self, actual, predicted):
-        """mean squared error
+    def sum_squared_error(self, actual, predicted):
+        """sum of squared error
+
+            sum(error^2)/2
 
         Args:
             actual (np.array): shape, (n_features)
@@ -75,7 +77,7 @@ class Perceptron(BaseModel):
         Returns:
             float: mse error value
         """
-        return np.mean(np.square((actual - predicted)))
+        return np.sum(np.square(actual - predicted)) / 2.0
 
     def _forward(self, X):
         """returns feedforward prediction
