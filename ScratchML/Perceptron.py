@@ -15,6 +15,12 @@ class Perceptron(BaseModel):
         self.loss = []
 
     def _init_weights(self, n_features):
+        """Randomly initialize weights and bias. Parameters will be set to random
+            values between [-1/sqrt(N), 1/sqrt(N)].
+
+            Args:
+                n_features (int): number of input features
+        """
         limit = 1 / math.sqrt(n_features)
         random_gen = np.random.RandomState(self.seed)
         # uniform initializations, you may try different ones
@@ -22,7 +28,7 @@ class Perceptron(BaseModel):
         self.bias = random_gen.uniform(-limit, limit, (1,))
 
     def fit(self, X, Y):
-        """Fit model on x and y training data
+        """Fit model on X and Y training data
 
         Args:
             X (np.array): input, shape (n_samples, n_features)

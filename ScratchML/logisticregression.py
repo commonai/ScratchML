@@ -21,9 +21,7 @@ class LogisticRegression(BaseModel):
         self.loss = []
 
     def _init_weights(self, n_features):
-        """Randomly initialize parameters. Parameters will be set to random
-            values between [-1/sqrt(N), 1/sqrt(N)]. Parameters shape
-            will equal to n_features of input.
+        """Intializes weights and bias to zeros
 
             Args:
                 n_features (int): number of input features
@@ -33,7 +31,7 @@ class LogisticRegression(BaseModel):
         self.bias = np.zeros((1,))
 
     def fit(self, X, Y):
-        """Fit model on x and y training data
+        """Fit model on X and Y training data
 
         Args:
             X (np.array): input, shape (n_samples, n_features)
