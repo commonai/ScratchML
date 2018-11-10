@@ -12,10 +12,10 @@ class LogisticRegression(BaseModel):
         Can only take class labels 0 and 1
     """
 
-    def __init__(self, n_iteration=100, learning_rate=0.0001, seed=1):
+    def __init__(self, n_iterations=100, learning_rate=0.0001, seed=1):
         self.weights = None
         self.bias = None
-        self.n_iteration = n_iteration
+        self.n_iterations = n_iterations
         self.learning_rate = learning_rate
         self.seed = seed
         self.loss = []
@@ -29,7 +29,8 @@ class LogisticRegression(BaseModel):
         """
         limit = 1 / math.sqrt(n_features)
         random_gen = np.random.RandomState(self.seed)
-        # uniform initializations is arbitrary, you may try different ones like normal
+        # uniform initializations is arbitrary
+        # you may try different ones like normal
         self.weights = random_gen.uniform(-limit, limit, (n_features,))
         self.bias = random_gen.uniform(-limit, limit, (1,))
 
@@ -43,7 +44,7 @@ class LogisticRegression(BaseModel):
         n_features = X.shape[1]
         self._init_weights(n_features)
 
-        for _ in tqdm(range(self.n_iteration)):
+        for _ in tqdm(range(self.n_iterations)):
             # forward pass
             output = self._forward(X)
 

@@ -6,10 +6,10 @@ from .base import BaseModel
 
 class Perceptron(BaseModel):
 
-    def __init__(self, n_iteration=1000, learning_rate=0.1, random_seed=1):
+    def __init__(self, n_iterations=1000, learning_rate=0.1, random_seed=1):
         self.weights = None
         self.bias = None
-        self.n_iteration = n_iteration
+        self.n_iterations = n_iterations
         self.learning_rate = learning_rate
         self.seed = random_seed
         self.loss = []
@@ -23,7 +23,8 @@ class Perceptron(BaseModel):
         """
         limit = 1 / math.sqrt(n_features)
         random_gen = np.random.RandomState(self.seed)
-        # uniform initializations is arbitrary, you may try different ones like normal
+        # uniform initializations is arbitrary, 
+        # you may try different ones like normal
         self.weights = random_gen.uniform(-limit, limit, (n_features,))
         self.bias = random_gen.uniform(-limit, limit, (1,))
 
@@ -37,7 +38,7 @@ class Perceptron(BaseModel):
         n_features = X.shape[1]
         self._init_weights(n_features)
 
-        for _ in tqdm(range(self.n_iteration)):
+        for _ in tqdm(range(self.n_iterations)):
             # feedforward and predict
             output = self._forward(X)
 
@@ -81,14 +82,17 @@ class Perceptron(BaseModel):
 
     def _forward(self, X):
         """returns feedforward prediction
-        
+
         Args:
-            X ([type]): [description]
-        
+            X (np.array): shape (n_samples, n_features)
+
         Returns:
-            [type]: [description]
+            (np.array): shape (n_samples)
         """
+        # (n_samples, n_features) x (n_features, 1)
+        # feedforward, shape (n_samples, 1)
         output = np.dot(X, self.weights) + self.bias
+        # pass feedforward results to activation function
         output = self.linear(output)
         return output
 
@@ -98,10 +102,10 @@ class Perceptron(BaseModel):
 
             1 if X > 0.0
             0 if X < 0.0
-        
+
         Args:
             X (np.array): shape (n_samples, n_features)
-        
+
         Returns:
             np.array: shape (n_samples, 1)
         """
