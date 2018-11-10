@@ -1,3 +1,3 @@
-# ScratchML
+# ScratchDL
 
-Popular Machine Learning Algorithms from scratch
+Popular Deep Learning Algorithms built from scratch
