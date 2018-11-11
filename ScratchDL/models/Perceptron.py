@@ -89,8 +89,8 @@ class Perceptron(BaseModel):
         Returns:
             (np.array): shape (n_samples)
         """
-        # (n_samples, n_features) x (n_features, 1)
-        # feedforward, shape (n_samples, 1)
+        # (n_samples, n_features) x (n_features,)
+        # feedforward, shape (n_samples,)
         output = np.dot(X, self.weights) + self.bias
         # pass feedforward results to activation function
         output = self.linear(output)
@@ -107,6 +107,6 @@ class Perceptron(BaseModel):
             X (np.array): shape (n_samples, n_features)
 
         Returns:
-            np.array: shape (n_samples, 1)
+            np.array: shape (n_samples,)
         """
         return np.where(self._forward(X) > 0.0, 1, 0)

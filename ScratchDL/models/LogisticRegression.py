@@ -49,7 +49,7 @@ class LogisticRegression(BaseModel):
             output = self._forward(X)
 
             # calculate error
-            errors = (Y - output)  # shape, (n_samples, 1)
+            errors = (Y - output)  # shape, (n_samples,)
 
             # backward pass
             # update weights and bias
@@ -98,8 +98,8 @@ class LogisticRegression(BaseModel):
         Returns:
             np.array: y pred, shape (n_samples)
         """
-        # (n_samples, n_features) x (n_features, 1)
-        # feedforward, shape (n_samples, 1)
+        # (n_samples, n_features) x (n_features,)
+        # feedforward, shape (n_samples,)
         output = np.dot(X, self.weights) + self.bias
         # pass feedforward results to activation function
         output = self.sigmoid(output)
