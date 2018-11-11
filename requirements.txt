@@ -2,3 +2,5 @@ numpy
 tqdm
 sklearn
 mlxtend
+torch
+torchvision

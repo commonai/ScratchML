@@ -12,10 +12,10 @@ class LogisticRegression(BaseModel):
         Can only take class labels 0 and 1
     """
 
-    def __init__(self, n_iterations=100, learning_rate=0.0001, seed=1):
+    def __init__(self, epochs=100, learning_rate=0.0001, seed=1):
         self.weights = None
         self.bias = None
-        self.n_iterations = n_iterations
+        self.epochs = epochs
         self.learning_rate = learning_rate
         self.seed = seed
         self.loss = []
@@ -44,7 +44,7 @@ class LogisticRegression(BaseModel):
         n_features = X.shape[1]
         self._init_weights(n_features)
 
-        for _ in tqdm(range(self.n_iterations)):
+        for _ in tqdm(range(self.epochs)):
             # forward pass
             output = self._forward(X)
 
@@ -107,7 +107,7 @@ class LogisticRegression(BaseModel):
 
     def predict(self, X):
         """Rounds the sigmoid values to 0 or 1
-            
+
             0 if X < 0.5
             1 if X >= 0.5
 

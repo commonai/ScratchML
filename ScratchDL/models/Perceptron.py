@@ -6,10 +6,10 @@ from .base import BaseModel
 
 class Perceptron(BaseModel):
 
-    def __init__(self, n_iterations=1000, learning_rate=0.1, random_seed=1):
+    def __init__(self, epochs=1000, learning_rate=0.1, random_seed=1):
         self.weights = None
         self.bias = None
-        self.n_iterations = n_iterations
+        self.epochs = epochs
         self.learning_rate = learning_rate
         self.seed = random_seed
         self.loss = []
@@ -38,7 +38,7 @@ class Perceptron(BaseModel):
         n_features = X.shape[1]
         self._init_weights(n_features)
 
-        for _ in tqdm(range(self.n_iterations)):
+        for _ in tqdm(range(self.epochs)):
             # feedforward and predict
             output = self._forward(X)
 
